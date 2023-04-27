@@ -5,12 +5,12 @@ import EditIcon from "../UI/EditIcon";
 const ListActions = () => {
   return (
     <div className="flex justify-around">
-      <span>
+      <button>
         <EditIcon />
-      </span>
-      <span>
+      </button>
+      <button>
         <DeleteIcon />
-      </span>
+      </button>
     </div>
   );
 };

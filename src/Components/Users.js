@@ -6,7 +6,7 @@ import ListHeaders from "./ListHeaders";
 const Users = () => {
   const { users } = useSelector((state) => state.users);
   return (
-    <div className="absolute top-20 w-[90%] ml-[4%]">
+    <div className="absolute top-20 w-[90%] ml-[5%]">
       <ListHeaders />
 
       <ul>
