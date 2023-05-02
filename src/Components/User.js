@@ -4,28 +4,17 @@ import SelectItem from "../UI/SelectItem";
 
 const User = ({ user }) => {
   return (
-    <div
-      className="relative pb-2 border-b border-gray-200 mb-4"
-      onClick={(e) => {
-        console.log(e.target.id);
-      }}
-    >
-      <section className=" flex absolute ml-[5%] top-5">
+    <tr className="flex justify-between w-full">
+      <td>
         <SelectItem />
-      </section>
-      <section className="flex absolute ml-[20%] top-5">
-        <span>{user.name}</span>
-      </section>
-      <section className="flex absolute ml-[40%] top-5">
-        <span>{user.email}</span>
-      </section>
-      <section className="flex absolute ml-[70%] top-5">
-        <span>{user.role}</span>
-      </section>
-      <section className="ml-[90%]">
+      </td>
+      <td>{user.name}</td>
+      <td>{user.email}</td>
+      <td>{user.role}</td>
+      <td>
         <ListActions />
-      </section>
-    </div>
+      </td>
+    </tr>
   );
 };
 export default User;

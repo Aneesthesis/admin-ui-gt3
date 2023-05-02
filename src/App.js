@@ -9,9 +9,13 @@ function App() {
   dispatch(fetchUsers());
 
   return (
-    <div className="App">
-      <SearchBar />
-      <Users />
+    <div className=" ">
+      <div className="">
+        <SearchBar />
+      </div>
+      <div className="w-[90%] mx-auto">
+        <Users />
+      </div>
     </div>
   );
 }
