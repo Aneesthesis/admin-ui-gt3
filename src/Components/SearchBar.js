@@ -1,12 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { usersActions } from "../store/users-slice";
 
 const SearchBar = () => {
+  const [searchString, setSearchString] = useState("");
+
+  const dispatch = useDispatch();
+
+  const inputChangeHandler = (e) => {
+    const string = e.target.value;
+    console.log(string);
+    setSearchString(string);
+  };
+
+  const activateSearchHandler = () => {
+    dispatch(usersActions.searchUsers(searchString));
+  };
+
   return (
-    <input
-      className=" ring-2 focus:ring-[#ff5171] outline-none w-screen ml-7 md:w-[94%] md:ml-[3%] h-8 my-2"
-      type="text"
-      placeholder="Search by name, email, or role"
-    ></input>
+    <form onSubmit={activateSearchHandler}>
+      <input
+        className=" ring-2 focus:ring-[#ff5171] outline-none w-screen ml-7 md:w-[94%] md:ml-[3%] h-8 my-2"
+        type="text"
+        placeholder="Search by name, email, or role"
+        onChange={inputChangeHandler}
+        value={searchString}
+      ></input>
+    </form>
   );
 };
 export default SearchBar;

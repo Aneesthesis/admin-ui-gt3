@@ -10,6 +10,15 @@ const usersSlice = createSlice({
       state.users = action.payload;
       console.log(state.users);
     },
+    searchUsers(state, action) {
+      const searchString = action.payload.trim().toLowerCase();
+      console.log(searchString);
+      const allUsers = state.users;
+      const matchedResults = allUsers.filter(
+        (user) => user.role.toLowerCase() === searchString
+      );
+      console.log(matchedResults);
+    },
   },
 });
 
