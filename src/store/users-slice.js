@@ -4,6 +4,7 @@ const usersSlice = createSlice({
   name: "users",
   initialState: {
     users: [],
+    searchedUsers: [],
   },
   reducers: {
     setUsers(state, action) {
@@ -15,9 +16,12 @@ const usersSlice = createSlice({
       console.log(searchString);
       const allUsers = state.users;
       const matchedResults = allUsers.filter(
-        (user) => user.role.toLowerCase() === searchString
+        (user) =>
+          user.role.toLowerCase().includes(searchString) ||
+          user.email.toLowerCase().includes(searchString) ||
+          user.name.toLowerCase().includes(searchString)
       );
-      console.log(matchedResults);
+      state.searchedUsers = matchedResults;
     },
   },
 });

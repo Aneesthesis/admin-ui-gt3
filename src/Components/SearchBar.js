@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { usersActions } from "../store/users-slice";
+import { uiActions } from "../store/uiSlice";
 
 const SearchBar = () => {
   const [searchString, setSearchString] = useState("");
@@ -9,11 +10,19 @@ const SearchBar = () => {
 
   const inputChangeHandler = (e) => {
     const string = e.target.value;
+    if (string.length === 0) {
+      dispatch(uiActions.setSearchOff());
+    }
     console.log(string);
     setSearchString(string);
   };
 
-  const activateSearchHandler = () => {
+  const activateSearchHandler = (e) => {
+    e.preventDefault();
+    if (searchString.trim().length === 0) {
+      return;
+    }
+    dispatch(uiActions.setSearchOn());
     dispatch(usersActions.searchUsers(searchString));
   };
 
