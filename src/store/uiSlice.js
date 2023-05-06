@@ -4,6 +4,7 @@ const uiSlice = createSlice({
   name: "ui",
   initialState: {
     searchIsOn: false,
+    searchValid: true,
   },
   reducers: {
     setSearchOn(state) {
@@ -11,6 +12,13 @@ const uiSlice = createSlice({
     },
     setSearchOff(state) {
       state.searchIsOn = false;
+      state.searchValid = true;
+    },
+    setSearchNotValid(state) {
+      state.searchValid = false;
+    },
+    setSearchIsValid(state) {
+      state.searchValid = true;
     },
   },
 });

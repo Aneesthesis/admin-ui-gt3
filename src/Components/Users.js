@@ -1,15 +1,20 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ListActions from "./ListActions";
 import SelectItem from "../UI/SelectItem";
 import Pagination from "../pagination";
+import FailedSearchMessage from "../UI/FailedSearchMessage";
+import { uiActions } from "../store/uiSlice";
+import DeleteIcon from "../UI/DeleteIcon";
+import { usersActions } from "../store/users-slice";
 
 const displayCount = 10;
 
 const Users = () => {
   const { users, searchedUsers } = useSelector((state) => state.users);
-  const { searchIsOn } = useSelector((state) => state.ui);
+  const { searchIsOn, searchValid } = useSelector((state) => state.ui);
   const [currentPage, setCurrentPage] = useState(1);
+  const dispatch = useDispatch();
 
   console.log(currentPage, users);
 
@@ -18,6 +23,11 @@ const Users = () => {
   //rendering only search results when search is on
   if (searchIsOn && searchedUsers.length > 0) {
     data = searchedUsers;
+    dispatch(uiActions.setSearchIsValid());
+  }
+
+  if (searchIsOn && searchedUsers.length === 0) {
+    dispatch(uiActions.setSearchNotValid());
   }
 
   const activeTableData = useMemo(() => {
@@ -28,8 +38,17 @@ const Users = () => {
     return data.slice(firstIndexInActiveTable, lastIndexInActiveTable);
   }, [currentPage, data, searchIsOn]);
 
+  const deleteItemHandler = (user) => {
+    dispatch(usersActions.deleteUser(user));
+  };
+
+  const editItemHandler = () => {
+    console.log("itemEdited");
+  };
+
   return (
     <>
+      {searchIsOn && !searchValid && <FailedSearchMessage />}
       <table className="w-full">
         <thead>
           <tr className="text-justify">
@@ -51,7 +70,11 @@ const Users = () => {
                 <td>{user.email}</td>
                 <td>{user.role}</td>
                 <td>
-                  <ListActions />
+                  <ListActions
+                    user={user}
+                    onDelete={deleteItemHandler}
+                    onEdit={editItemHandler}
+                  />
                 </td>
               </tr>
             );

@@ -23,6 +23,11 @@ const usersSlice = createSlice({
       );
       state.searchedUsers = matchedResults;
     },
+    deleteUser(state, action) {
+      const allUsers = state.users;
+      const deletedUser = action.payload.id;
+      console.log(action.payload);
+    },
   },
 });
 
