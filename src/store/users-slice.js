@@ -24,9 +24,13 @@ const usersSlice = createSlice({
       state.searchedUsers = matchedResults;
     },
     deleteUser(state, action) {
-      const allUsers = state.users;
-      const deletedUser = action.payload.id;
-      console.log(action.payload);
+      const users = state.users;
+      const del_user_Id = action.payload.id;
+      const index = users.map((user) => user.id).indexOf(del_user_Id);
+
+      users.splice(index, 1);
+      //replacing state.users after deletion
+      state.users = users;
     },
   },
 });

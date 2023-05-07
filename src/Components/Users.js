@@ -39,6 +39,7 @@ const Users = () => {
   }, [currentPage, data, searchIsOn]);
 
   const deleteItemHandler = (user) => {
+    console.log(user);
     dispatch(usersActions.deleteUser(user));
   };
 
@@ -81,12 +82,19 @@ const Users = () => {
           })}
         </tbody>
       </table>
-      <Pagination
-        currentPage={currentPage}
-        totalCount={users.length}
-        displayCount={displayCount}
-        onPageChange={(page) => setCurrentPage(page)}
-      />
+      <div className="flex justify-between mb-8">
+        <button className=" w-fit bg-rose-500 py-1 px-3 rounded-full text-white">
+          Deleted Selected
+        </button>
+        <div className="flex-1">
+          <Pagination
+            currentPage={currentPage}
+            totalCount={data.length}
+            displayCount={displayCount}
+            onPageChange={(page) => setCurrentPage(page)}
+          />
+        </div>
+      </div>
     </>
   );
 };

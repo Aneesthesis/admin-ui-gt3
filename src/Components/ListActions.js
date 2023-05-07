@@ -8,7 +8,11 @@ const ListActions = ({ user, onDelete, onEdit }) => {
       <button>
         <EditIcon />
       </button>
-      <button onClick={onDelete.bind(user)}>
+      <button
+        onClick={() => {
+          onDelete(user);
+        }}
+      >
         <DeleteIcon />
       </button>
     </div>
