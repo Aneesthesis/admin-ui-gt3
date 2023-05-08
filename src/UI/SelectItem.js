@@ -1,9 +1,9 @@
 import React from "react";
 
-const SelectItem = () => {
+const SelectItem = ({ onCheck, user }) => {
   return (
     <div>
-      <input type="checkbox" />
+      <input type="checkbox" onChange={() => onCheck(user)} />
     </div>
   );
 };

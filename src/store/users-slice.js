@@ -5,6 +5,7 @@ const usersSlice = createSlice({
   initialState: {
     users: [],
     searchedUsers: [],
+    selectedUsers: [],
   },
   reducers: {
     setUsers(state, action) {
@@ -31,6 +32,24 @@ const usersSlice = createSlice({
       users.splice(index, 1);
       //replacing state.users after deletion
       state.users = users;
+    },
+    selectUser(state, action) {
+      const selectedUser = action.payload;
+
+      const existingUser = state.selectedUsers.find(
+        (user) => user.id === selectedUser.id
+      );
+
+      if (existingUser) {
+        const existingUserIndex = state.selectedUsers
+          .map((user) => user.id)
+          .indexOf(existingUser.id);
+
+        state.selectedUsers.splice(existingUserIndex, 1);
+      }
+      if (!existingUser) {
+        state.selectedUsers.push(selectedUser);
+      }
     },
   },
 });
