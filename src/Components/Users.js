@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ListActions from "./ListActions";
 import SelectItem from "../UI/SelectItem";
@@ -10,7 +10,7 @@ import { usersActions } from "../store/users-slice";
 const displayCount = 10;
 
 const Users = () => {
-  const { users, searchedUsers, selectedUsers } = useSelector(
+  const { users, searchedUsers, selectedUsers, filteredUsers } = useSelector(
     (state) => state.users
   );
   const { searchIsOn, searchValid } = useSelector((state) => state.ui);
@@ -21,15 +21,22 @@ const Users = () => {
 
   let data = users;
 
-  //updating table when search is on
-  if (searchIsOn && searchedUsers.length > 0) {
-    data = searchedUsers;
-    dispatch(uiActions.setSearchIsValid());
-  }
+  // //updating table when search is on
+  // if (searchIsOn && searchedUsers.length > 0) {
+  //   data = searchedUsers;
+  //   dispatch(uiActions.setSearchIsValid());
+  // }
 
-  if (searchIsOn && searchedUsers.length === 0) {
+  if (searchIsOn && users.length === 0) {
     dispatch(uiActions.setSearchNotValid());
   }
+
+  //updating table after deletion of selected rows
+
+  // let checkboxArr = document.querySelectorAll(".checkbox");
+  // for (let index = 0; index < checkboxArr.length; index++) {
+  //   checkboxArr[index].checked = false;
+  // }
 
   const activeTableData = useMemo(() => {
     const firstIndexInActiveTable = (currentPage - 1) * displayCount;
@@ -39,18 +46,21 @@ const Users = () => {
     return data.slice(firstIndexInActiveTable, lastIndexInActiveTable);
   }, [currentPage, data, searchIsOn]);
 
-  const deleteItemHandler = (user) => {
+  const deleteUserHandler = (user) => {
     dispatch(usersActions.deleteUser(user));
   };
 
-  const editItemHandler = () => {
+  const editUserHandler = () => {
     console.log("itemEdited");
   };
 
-  const checkItemHandler = (user) => {
+  const checkUserHandler = (user) => {
     dispatch(usersActions.selectUser(user));
   };
 
+  const deleteSelectedHandler = () => {
+    dispatch(usersActions.deleteSelected());
+  };
   return (
     <>
       {searchIsOn && !searchValid && <FailedSearchMessage />}
@@ -77,7 +87,7 @@ const Users = () => {
                   } `}
                 >
                   <td>
-                    <SelectItem onCheck={checkItemHandler} user={user} />
+                    <SelectItem onCheck={checkUserHandler} user={user} />
                   </td>
                   <td>{user.name}</td>
                   <td>{user.email}</td>
@@ -85,8 +95,9 @@ const Users = () => {
                   <td>
                     <ListActions
                       user={user}
-                      onDelete={deleteItemHandler}
-                      onEdit={editItemHandler}
+                      onDelete={deleteUserHandler}
+                      onEdit={editUserHandler}
+                      disabled={selectedUsers.length > 0} //disabling operation on individual rows when multiple rows selected
                     />
                   </td>
                 </tr>
@@ -97,7 +108,12 @@ const Users = () => {
         </tbody>
       </table>
       <div className="flex justify-between mb-8">
-        <button className=" w-fit bg-rose-500 py-1 px-3 rounded-full text-white">
+        <button
+          onClick={deleteSelectedHandler}
+          className={`${
+            selectedUsers.length === 0 ? "hidden" : "block"
+          } w-fit bg-rose-500 py-1 px-3 rounded-full text-white"`}
+        >
           Deleted Selected
         </button>
         <div className="flex-1">

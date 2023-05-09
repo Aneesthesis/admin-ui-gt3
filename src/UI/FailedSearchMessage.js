@@ -13,7 +13,7 @@ const FailedSearchMessage = () => {
 
   return (
     <>
-      <div className="fixed top-[10%] left-10 md:left-[38%] px-4 py-2 z-10 text-rose-500 bg-orange-50">
+      <div className="fixed top-[20%] left-3 md:left-[35%]  px-4 py-2 z-10 text-rose-500 bg-orange-50">
         <header className="font-bold text-center">No users found!</header>
         <p className="font-semibold">
           Try searching with a different name, email, or role

@@ -3,7 +3,12 @@ import React from "react";
 const SelectItem = ({ onCheck, user }) => {
   return (
     <div>
-      <input type="checkbox" onChange={() => onCheck(user)} />
+      <input
+        className="checkbox"
+        type="checkbox"
+        defaultChecked={true}
+        onChange={() => onCheck(user)}
+      />
     </div>
   );
 };

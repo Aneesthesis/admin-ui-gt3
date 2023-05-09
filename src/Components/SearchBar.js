@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { usersActions } from "../store/users-slice";
 import { uiActions } from "../store/uiSlice";
+import { fetchUsers } from "../store/users-action";
 
 const SearchBar = () => {
   const [searchString, setSearchString] = useState("");
@@ -13,6 +14,7 @@ const SearchBar = () => {
     const string = e.target.value;
     if (string.trim().length === 0) {
       dispatch(uiActions.setSearchOff());
+      dispatch(fetchUsers());
     }
     console.log(string);
     setSearchString(string);

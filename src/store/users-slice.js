@@ -4,8 +4,9 @@ const usersSlice = createSlice({
   name: "users",
   initialState: {
     users: [],
-    searchedUsers: [],
+    // searchedUsers: [],
     selectedUsers: [],
+    // filteredUsers: [],
   },
   reducers: {
     setUsers(state, action) {
@@ -22,7 +23,8 @@ const usersSlice = createSlice({
           user.email.toLowerCase().includes(searchString) ||
           user.name.toLowerCase().includes(searchString)
       );
-      state.searchedUsers = matchedResults;
+      //state.searchedUsers = matchedResults;
+      state.users = matchedResults;
     },
     deleteUser(state, action) {
       const users = state.users;
@@ -50,6 +52,23 @@ const usersSlice = createSlice({
       if (!existingUser) {
         state.selectedUsers.push(selectedUser);
       }
+    },
+    deleteSelected(state, action) {
+      //console.log(state.filteredUsers.length);
+      let users = state.users;
+      //const filteredUsers = state.filteredUsers;
+
+      //if (!filteredUsers.length === 0) users = filteredUsers;
+
+      const selectedUsersIds = state.selectedUsers.map((user) => user.id);
+
+      console.log(selectedUsersIds);
+
+      const filteredArr = users.filter(
+        (user) => selectedUsersIds.indexOf(user.id) == -1
+      );
+      state.users = filteredArr;
+      state.selectedUsers = [];
     },
   },
 });
