@@ -5,6 +5,7 @@ const uiSlice = createSlice({
   initialState: {
     searchIsOn: false,
     searchValid: true,
+    editingUser: false,
   },
   reducers: {
     setSearchOn(state) {
@@ -19,6 +20,12 @@ const uiSlice = createSlice({
     },
     setSearchIsValid(state) {
       state.searchValid = true;
+    },
+    setEditingOn(state) {
+      state.editingUser = true;
+    },
+    setEditingOff(state) {
+      state.editingUser = false;
     },
   },
 });

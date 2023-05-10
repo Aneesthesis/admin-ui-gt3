@@ -6,7 +6,6 @@ const SelectItem = ({ onCheck, user }) => {
       <input
         className="checkbox"
         type="checkbox"
-        defaultChecked={true}
         onChange={() => onCheck(user)}
       />
     </div>

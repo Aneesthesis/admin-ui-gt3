@@ -8,6 +8,9 @@ const ListActions = ({ user, onDelete, onEdit, disabled }) => {
       <button
         disabled={disabled}
         className={`${disabled && "cursor-not-allowed"}`}
+        onClick={() => {
+          onEdit(user);
+        }}
       >
         <EditIcon />
       </button>

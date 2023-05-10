@@ -6,15 +6,19 @@ import Pagination from "../pagination";
 import FailedSearchMessage from "../UI/FailedSearchMessage";
 import { uiActions } from "../store/uiSlice";
 import { usersActions } from "../store/users-slice";
+import EditUserForm from "../UI/EditUserForm";
 
 const displayCount = 10;
 
 const Users = () => {
-  const { users, searchedUsers, selectedUsers, filteredUsers } = useSelector(
+  const { users, selectedUsers, editedUser } = useSelector(
     (state) => state.users
   );
-  const { searchIsOn, searchValid } = useSelector((state) => state.ui);
+  const { searchIsOn, searchValid, editingUser } = useSelector(
+    (state) => state.ui
+  );
   const [currentPage, setCurrentPage] = useState(1);
+  // const [editedUser, setEditedUser] = useState({});
   const dispatch = useDispatch();
 
   console.log(currentPage, users);
@@ -50,8 +54,9 @@ const Users = () => {
     dispatch(usersActions.deleteUser(user));
   };
 
-  const editUserHandler = () => {
-    console.log("itemEdited");
+  const editUserHandler = (user) => {
+    dispatch(uiActions.setEditingOn());
+    dispatch(usersActions.setEditedUser(user));
   };
 
   const checkUserHandler = (user) => {
@@ -64,6 +69,17 @@ const Users = () => {
   return (
     <>
       {searchIsOn && !searchValid && <FailedSearchMessage />}
+      {editingUser && (
+        <EditUserForm
+          userData={{
+            key: editedUser.id,
+            id: editedUser.id,
+            name: editedUser.name,
+            email: editedUser.email,
+            role: editedUser.role,
+          }}
+        />
+      )}
       <table className="w-full">
         <thead>
           <tr className="text-justify">

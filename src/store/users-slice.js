@@ -6,6 +6,7 @@ const usersSlice = createSlice({
     users: [],
     // searchedUsers: [],
     selectedUsers: [],
+    editedUser: {},
     // filteredUsers: [],
   },
   reducers: {
@@ -69,6 +70,11 @@ const usersSlice = createSlice({
       );
       state.users = filteredArr;
       state.selectedUsers = [];
+    },
+    setEditedUser(state, action) {
+      const user = action.payload;
+      state.editedUser = user;
+      console.log(user);
     },
   },
 });
