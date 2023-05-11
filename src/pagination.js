@@ -1,5 +1,6 @@
 import React from "react";
 import { usePagination } from "./hooks/usePagination";
+import PageButton from "./UI/PageButton";
 
 const Pagination = ({
   onPageChange,
@@ -38,23 +39,36 @@ const Pagination = ({
 
   return (
     <ul className="flex justify-around">
-      {/*go the first page */}
-      <li onClick={showFirst}>
-        <button>&#60;&#60;</button>
-      </li>
-      {/*go the prev page */}
-      <li onClick={showPrevious}>
-        <button disabled={currentPage === 1}>&#60;</button>
-      </li>
-
-      {/*go to next page */}
-      <li onClick={showNext}>
-        <button disabled={currentPage === lastPage}>&#62;</button>
-      </li>
-      {/*go the last page */}
-      <li onClick={showLast}>
-        <button>&#62;&#62;</button>
-      </li>
+      <PageButton
+        onClick={showFirst}
+        disabled={currentPage === 1}
+        symbol="&#x226A;"
+      />
+      <PageButton
+        onClick={showPrevious}
+        disabled={currentPage === 1}
+        symbol="&#x226A;"
+      />
+      {paginationSpan.map((pageNumber) => {
+        // Render our numbered buttons
+        return (
+          <PageButton
+            onClick={() => onPageChange(pageNumber)}
+            symbol={pageNumber}
+            selected={currentPage === pageNumber}
+          />
+        );
+      })}
+      <PageButton
+        onClick={showNext}
+        disabled={currentPage === lastPage}
+        symbol="&#x3c;"
+      />
+      <PageButton
+        onClick={showLast}
+        disabled={currentPage === lastPage}
+        symbol="&#x226B;"
+      />
     </ul>
   );
 };

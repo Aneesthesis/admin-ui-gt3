@@ -76,6 +76,27 @@ const usersSlice = createSlice({
       state.editedUser = user;
       console.log(user);
     },
+    editUser(state, action) {
+      const editedUserData = action.payload;
+      const index = state.users
+        .map((user) => user.id)
+        .indexOf(state.editedUser.id);
+      const user = state.users[index];
+
+      user.name = editedUserData.name
+        .trim()
+        .split(" ", 3)
+        .map((part) =>
+          part.slice(0, 1).toUpperCase().concat(part.slice(1).toLowerCase())
+        )
+        .join(" ");
+
+      user.email = editedUserData.email.trim().toLowerCase();
+
+      user.role = editedUserData.role;
+
+      state.editedUser = {};
+    },
   },
 });
 

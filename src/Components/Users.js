@@ -10,6 +10,11 @@ import EditUserForm from "../UI/EditUserForm";
 
 const displayCount = 10;
 
+const scrollToTop = () => {
+  console.log("totop");
+  window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+};
+
 const Users = () => {
   const { users, selectedUsers, editedUser } = useSelector(
     (state) => state.users
@@ -55,6 +60,7 @@ const Users = () => {
   };
 
   const editUserHandler = (user) => {
+    scrollToTop();
     dispatch(uiActions.setEditingOn());
     dispatch(usersActions.setEditedUser(user));
   };
@@ -94,16 +100,20 @@ const Users = () => {
           {activeTableData.map((user) => {
             return (
               <>
-                <tr class="spacer h-[1px]"></tr>
+                <tr class="spacer h-[1px]  bg-gray-800"></tr>
                 <tr
                   className={`${
                     selectedUsers
                       .map((user) => user.id)
                       .some((id) => id === user.id) && "bg-gray-300"
-                  } `}
+                  } ${user.id === editedUser.id && "text-gray-400"}`}
                 >
                   <td>
-                    <SelectItem onCheck={checkUserHandler} user={user} />
+                    <SelectItem
+                      onCheck={checkUserHandler}
+                      user={user}
+                      disabled={editingUser}
+                    />
                   </td>
                   <td>{user.name}</td>
                   <td>{user.email}</td>
@@ -113,11 +123,11 @@ const Users = () => {
                       user={user}
                       onDelete={deleteUserHandler}
                       onEdit={editUserHandler}
-                      disabled={selectedUsers.length > 0} //disabling operation on individual rows when multiple rows selected
+                      disabled={selectedUsers.length > 0 || editingUser} //disabling operation on individual rows when multiple rows selected
                     />
                   </td>
                 </tr>
-                <tr class="spacer h-[1px]"></tr>
+                <tr class="spacer h-[1px] bg-gray-800"></tr>
               </>
             );
           })}
@@ -133,12 +143,14 @@ const Users = () => {
           Deleted Selected
         </button>
         <div className="flex-1">
-          <Pagination
-            currentPage={currentPage}
-            totalCount={data.length}
-            displayCount={displayCount}
-            onPageChange={(page) => setCurrentPage(page)}
-          />
+          {searchValid && data.length > 0 && (
+            <Pagination
+              currentPage={currentPage}
+              totalCount={data.length}
+              displayCount={displayCount}
+              onPageChange={(page) => setCurrentPage(page)}
+            />
+          )}
         </div>
       </div>
     </>
