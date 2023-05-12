@@ -11,7 +11,13 @@ const usersSlice = createSlice({
   },
   reducers: {
     setUsers(state, action) {
-      state.users = action.payload;
+      let users = action.payload;
+
+      users = users.map((user) => {
+        return { ...user, key: user.id, checked: false };
+      });
+
+      state.users = users;
       console.log(state.users);
     },
     searchUsers(state, action) {
@@ -54,20 +60,26 @@ const usersSlice = createSlice({
         state.selectedUsers.push(selectedUser);
       }
     },
+    toggleChecked(state, action) {
+      const selected = state.selectedUsers;
+      const selectedUserIds = selected.map((user) => user.id);
+
+      state.users.forEach((user) => {
+        const isSelected = selectedUserIds.indexOf(user.id);
+        if (isSelected > -1) {
+          user.checked = true;
+        }
+      });
+    },
+
     deleteSelected(state, action) {
-      //console.log(state.filteredUsers.length);
       let users = state.users;
-      //const filteredUsers = state.filteredUsers;
-
-      //if (!filteredUsers.length === 0) users = filteredUsers;
-
       const selectedUsersIds = state.selectedUsers.map((user) => user.id);
-
-      console.log(selectedUsersIds);
 
       const filteredArr = users.filter(
         (user) => selectedUsersIds.indexOf(user.id) == -1
       );
+
       state.users = filteredArr;
       state.selectedUsers = [];
     },

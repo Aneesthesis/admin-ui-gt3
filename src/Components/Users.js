@@ -40,13 +40,6 @@ const Users = () => {
     dispatch(uiActions.setSearchNotValid());
   }
 
-  //updating table after deletion of selected rows
-
-  // let checkboxArr = document.querySelectorAll(".checkbox");
-  // for (let index = 0; index < checkboxArr.length; index++) {
-  //   checkboxArr[index].checked = false;
-  // }
-
   const activeTableData = useMemo(() => {
     const firstIndexInActiveTable = (currentPage - 1) * displayCount;
     const lastIndexInActiveTable = firstIndexInActiveTable + displayCount;
@@ -67,6 +60,7 @@ const Users = () => {
 
   const checkUserHandler = (user) => {
     dispatch(usersActions.selectUser(user));
+    dispatch(usersActions.toggleChecked());
   };
 
   const deleteSelectedHandler = () => {
@@ -83,6 +77,7 @@ const Users = () => {
             name: editedUser.name,
             email: editedUser.email,
             role: editedUser.role,
+            checked: editedUser.checked,
           }}
         />
       )}
@@ -113,6 +108,7 @@ const Users = () => {
                       onCheck={checkUserHandler}
                       user={user}
                       disabled={editingUser}
+                      checked={user.checked}
                     />
                   </td>
                   <td>{user.name}</td>

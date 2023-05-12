@@ -47,10 +47,10 @@ const Pagination = ({
       <PageButton
         onClick={showPrevious}
         disabled={currentPage === 1}
-        symbol="&#x226A;"
+        symbol="&#x3c;"
       />
       {paginationSpan.map((pageNumber) => {
-        // Render our numbered buttons
+        // Render numbered buttons
         return (
           <PageButton
             onClick={() => onPageChange(pageNumber)}
@@ -62,7 +62,7 @@ const Pagination = ({
       <PageButton
         onClick={showNext}
         disabled={currentPage === lastPage}
-        symbol="&#x3c;"
+        symbol="&#x3e;"
       />
       <PageButton
         onClick={showLast}

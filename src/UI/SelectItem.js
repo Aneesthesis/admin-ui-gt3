@@ -1,6 +1,6 @@
 import React from "react";
 
-const SelectItem = ({ onCheck, user, disabled }) => {
+const SelectItem = ({ onCheck, user, disabled, checked }) => {
   return (
     <div>
       <input
@@ -8,6 +8,7 @@ const SelectItem = ({ onCheck, user, disabled }) => {
         type="checkbox"
         onChange={() => onCheck(user)}
         disabled={disabled}
+        checked={checked}
       />
     </div>
   );
