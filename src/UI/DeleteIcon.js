@@ -19,14 +19,14 @@ const DeleteIcon = () => {
           {" "}
           <path
             d="M10 12V17"
-            stroke="##f8312f"
+            stroke="#f8312f"
             stroke-width="1.56"
             stroke-linecap="round"
             stroke-linejoin="round"
           ></path>{" "}
           <path
             d="M14 12V17"
-            stroke="##f8312f"
+            stroke="#f8312f"
             stroke-width="1.56"
             stroke-linecap="round"
             stroke-linejoin="round"

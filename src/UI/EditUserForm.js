@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { uiActions } from "../store/uiSlice";
 import { usersActions } from "../store/users-slice";
+import CloseIcon from "./CloseIcon";
 
 const EditUserForm = ({ userData }) => {
   const [enteredUserName, setEnteredUserName] = useState(userData.name);
@@ -73,6 +74,11 @@ const EditUserForm = ({ userData }) => {
     dispatch(usersActions.editUser(editedUserData));
   };
 
+  const closeEditHandler = (e) => {
+    e.preventDefault();
+    dispatch(uiActions.setEditingOff());
+  };
+
   return (
     <form
       onSubmit={formSubmitHandler}
@@ -136,6 +142,12 @@ const EditUserForm = ({ userData }) => {
 
       <div className="mx-auto my-6 px-2 py-1 w-fit bg-slate-400 text-white font-semibold rounded-md active:bg-slate-300">
         <button>Submit</button>
+      </div>
+      <div
+        onClick={closeEditHandler}
+        className="absolute md:top-10 top-12 right-8 md:right-20"
+      >
+        <CloseIcon />
       </div>
     </form>
   );
