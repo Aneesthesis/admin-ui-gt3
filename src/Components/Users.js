@@ -10,10 +10,16 @@ import EditUserForm from "../UI/EditUserForm";
 
 const displayCount = 10;
 
-const scrollToTop = () => {
-  console.log("totop");
-  window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-};
+// const scrollToTop = () => {
+//   console.log("totop");
+//   window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+// };
+const scrollToTop = () =>
+  window.scroll({
+    top: 0,
+    left: 0,
+    behavior: "smooth",
+  });
 
 const Users = () => {
   const { users, selectedUsers, editedUser } = useSelector(
@@ -60,7 +66,7 @@ const Users = () => {
 
   const checkUserHandler = (user) => {
     dispatch(usersActions.selectUser(user));
-    dispatch(usersActions.toggleChecked());
+    dispatch(usersActions.checkSelected());
   };
 
   const deleteSelectedHandler = () => {
@@ -129,16 +135,16 @@ const Users = () => {
           })}
         </tbody>
       </table>
-      <div className="flex justify-between mb-8">
+      <div className="flex flex-col md:flex-row relative justify-between mt-4 mb-8">
         <button
           onClick={deleteSelectedHandler}
-          className={`${
+          className={`md:absolute ml-[38%] md:mx-auto my-5 md:my-0 w-fit bg-rose-500 py-1 px-3 rounded-full text-white ${
             selectedUsers.length === 0 ? "hidden" : "block"
-          } w-fit bg-rose-500 py-1 px-3 rounded-full text-white"`}
+          } "`}
         >
           Deleted Selected
         </button>
-        <div className="flex-1">
+        <div className="w-[90%] md:w-[50%] ml-[12%] md:mx-auto">
           {searchValid && data.length > 0 && (
             <Pagination
               currentPage={currentPage}
@@ -154,3 +160,5 @@ const Users = () => {
 };
 
 export default Users;
+
+//edit

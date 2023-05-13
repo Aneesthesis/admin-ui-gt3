@@ -9,7 +9,7 @@ function App() {
 
   return (
     <div className=" ">
-      <div className="">
+      <div>
         <SearchBar />
       </div>
       <div className="w-[90%] mx-auto">

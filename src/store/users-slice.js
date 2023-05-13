@@ -49,10 +49,20 @@ const usersSlice = createSlice({
         (user) => user.id === selectedUser.id
       );
 
+      //find index of existing and uncheck
+
       if (existingUser) {
+        //remove row from selectedUsers array when unchecked
         const existingUserIndex = state.selectedUsers
           .map((user) => user.id)
           .indexOf(existingUser.id);
+
+        //unchecking already checked checkbox
+        const existingUserIndexInTable = state.users
+          .map((user) => user.id)
+          .indexOf(existingUser.id);
+
+        state.users[existingUserIndexInTable]["checked"] = false;
 
         state.selectedUsers.splice(existingUserIndex, 1);
       }
@@ -60,7 +70,7 @@ const usersSlice = createSlice({
         state.selectedUsers.push(selectedUser);
       }
     },
-    toggleChecked(state, action) {
+    checkSelected(state, action) {
       const selected = state.selectedUsers;
       const selectedUserIds = selected.map((user) => user.id);
 
